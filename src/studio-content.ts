@@ -4,11 +4,11 @@ import { comparisonImages } from './catalog'
 
 export const cases = [
   {
-    id: 'body', model: 'Lexus LFA', title: 'Коррекция кузова', image: comparisonImages.paintBefore,
+    id: 'body', model: 'Lexus LFA', title: 'Коррекция кузова', image: comparisonImages.paintAfter,
     state: 'Мелкие царапины, следы моек и тусклые отражения на лаке.',
     work: 'Очистка кузова, тестовая полировка и коррекция лакокрасочного покрытия.',
     result: 'Более чёткие отражения и меньше заметных поверхностных дефектов.',
-    duration: '1–2 дня', photos: [comparisonImages.paintBefore, comparisonImages.headlightAfter, images.mirror],
+    duration: '1–2 дня', photos: [comparisonImages.paintBefore, comparisonImages.paintAfter, images.mirror],
   },
   {
     id: 'interior', model: 'Lexus LFA', title: 'Уход за салоном и оптикой', image: comparisonImages.interiorAfter,

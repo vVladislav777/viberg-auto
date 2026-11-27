@@ -5,13 +5,13 @@ import { money, pricing, type ServiceId } from '@/pricing'
 import { Label } from './SectionUI'
 
 const examples = [
-  { id: 'polishing', before: comparisonImages.headlightBefore, after: comparisonImages.headlightAfter,
-    subject: 'Капот и переднее крыло', result: 'На участке кузова видна разница между мутным лаком и более чёткими отражениями после коррекции.', framing: 'paint' },
+  { id: 'polishing', before: comparisonImages.paintBefore, after: comparisonImages.paintAfter,
+    subject: 'Кузов Lexus LFA', result: 'На демонстрационных кадрах видно, как после коррекции лака отражения на капоте и крыльях становятся чётче.' },
   { id: 'interior', before: comparisonImages.interiorBefore, after: comparisonImages.interiorAfter,
-    subject: 'Кожа, ковролин и панели', result: 'Светлая обивка без видимых загрязнений, очищенные панели и ковролин.', framing: 'full' },
+    subject: 'Кожа, ковролин и панели', result: 'Светлая обивка без видимых загрязнений, очищенные панели и ковролин.' },
   { id: 'headlights', before: comparisonImages.headlightBefore, after: comparisonImages.headlightAfter,
-    subject: 'Передняя оптика', result: 'Убраны видимые следы помутнения и царапины на внешней поверхности.', framing: 'full' },
-] satisfies { id: ServiceId; before: string; after: string; subject: string; result: string; framing: string }[]
+    subject: 'Передняя оптика', result: 'Убраны видимые следы помутнения и царапины на внешней поверхности.' },
+] satisfies { id: ServiceId; before: string; after: string; subject: string; result: string }[]
 
 export function Comparison() {
   const [active, setActive] = useState(0)
@@ -30,7 +30,7 @@ export function Comparison() {
       </button>)}
     </div>
     <div className="comparison-layout">
-      <div className={`comparison-frame comparison-${item.framing}`} style={{ '--divider': divider + '%' } as CSSProperties}>
+      <div className="comparison-frame" style={{ '--divider': divider + '%' } as CSSProperties}>
         <div className="comparison-layer"><img src={item.after} alt={item.subject + ' после обработки'} loading="lazy" width={1280} height={960}/></div>
         <div className="comparison-layer comparison-before"><img src={item.before} alt={item.subject + ' до обработки'} loading="lazy" width={1280} height={960}/></div>
         <span className="compare-tag before-tag">До</span><span className="compare-tag after-tag">После</span>

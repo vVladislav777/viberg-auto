@@ -56,8 +56,11 @@
 .commercial .service-grid { gap: 19px; }
 .commercial .service-card { cursor: default; min-width: 0; border-radius: 16px; }
 .commercial .service-card:hover { transform: translateY(-3px); }
-.commercial .service-image { width: 100%; aspect-ratio: 1.95; }
+.commercial .service-image { width: 100%; aspect-ratio: 16/10; }
 .commercial .service-image img { filter: brightness(.9); }
+.commercial .service-card[data-service="polishing"] .service-image img { object-position: center 68%; }
+.commercial .service-card[data-service="oil"] .service-image img { object-position: center 64%; }
+.commercial .service-card[data-service="diagnostics"] .service-image img { object-position: center 64%; }
 .commercial .service-category { font-size: 12px; letter-spacing: 0; background: #0a0b0cdd; }
 .commercial .service-copy { width: 100%; min-height: 0; display: flex; flex-direction: column; padding: 14px 22px 20px; }
 .commercial .service-copy h3 { font-size: clamp(18px, 1.65vw, 25px); margin-bottom: 8px; }
@@ -84,9 +87,8 @@
 .comparison-filters { margin-bottom: 24px; }
 .comparison-frame { position: relative; isolation: isolate; overflow: hidden; background: #1c2022; aspect-ratio: 4/3; border-radius: 18px; }
 .comparison-layer { position: absolute; inset: 0; overflow: hidden; }
-.comparison-layer img { height: 100%; }
+.comparison-layer img { height: 100%; object-fit: contain; }
 .comparison-before { clip-path: inset(0 calc(100% - var(--divider)) 0 0); }
-.comparison-paint img { transform: scale(1.85); transform-origin: 5% 18%; }
 .compare-tag { position: absolute; top: 15px; padding: 6px 13px; border-radius: 50px; background: #111418ed; color: white; font-size: 13px; font-weight: 700; }
 .before-tag { left: 15px; } .after-tag { right: 15px; }
 .compare-divider { position: absolute; inset: 0 auto 0 var(--divider); width: 2px; background: #fff; transform: translateX(-50%); display: grid; place-items: center; }

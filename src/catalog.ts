@@ -16,6 +16,14 @@ export const comparisonImages = {
   interiorBefore: root + 'interior-before.jpg',
   interiorAfter: root + 'interior-after.jpg',
   paintBefore: root + 'paint-before.jpg',
+  paintAfter: root + 'paint-after.jpg',
+}
+
+const servicePhotos = {
+  polishing: comparisonImages.paintAfter,
+  oil: root + 'service-oil-change.jpg',
+  maintenance: root + 'service-scheduled-maintenance.jpg',
+  diagnostics: root + 'service-computer-diagnostics.jpg',
 }
 
 type Service = {
@@ -45,6 +53,7 @@ export const catalog: Service[] = [
     const [problem, factors] = details[id]
     return {
       ...item, id, direction: id === 'oil' || id === 'engine' ? 'service' as const : 'detailing' as const,
+      image: id === 'polishing' || id === 'oil' ? servicePhotos[id] : item.image,
       title: id === 'oil' ? 'Замена масла и фильтров' : item.title,
       description: id === 'oil' ? 'Свежее масло по допуску производителя и новые фильтры по регламенту.' : item.description,
       problem, factors,
@@ -58,11 +67,11 @@ export const catalog: Service[] = [
     description: 'Более прозрачная внешняя поверхность рассеивателей.', problem: 'Помутнение и мелкие царапины на пластике фар.',
     details: 'Проверяем, где возникло помутнение. При поверхностном дефекте защищаем кузов, полируем пластик и наносим защитный состав.',
     includes: ['Осмотр оптики', 'Коррекция внешней поверхности', 'Защита рассеивателей'], factors: 'Состояние пластика, количество фар и выбранная защита.' },
-  { id: 'diagnostics', direction: 'service', title: 'Компьютерная диагностика', image: images.engine,
+  { id: 'diagnostics', direction: 'service', title: 'Компьютерная диагностика', image: servicePhotos.diagnostics,
     description: 'Понимание причины ошибки и список следующих проверок.', problem: 'Индикаторы на панели или сбои в работе систем.',
     details: 'Уточняем симптомы, считываем ошибки и параметры работы, сопоставляем показания с жалобой.',
     includes: ['Чтение кодов ошибок', 'Проверка параметров', 'Объяснение результатов'], factors: 'Марка, количество систем и необходимость дополнительных измерений.' },
-  { id: 'maintenance', direction: 'service', title: 'Техническое обслуживание', image: images.lift,
+  { id: 'maintenance', direction: 'service', title: 'Техническое обслуживание', image: servicePhotos.maintenance,
     description: 'Плановые работы по регламенту с понятным перечнем замен.', problem: 'Приближается плановое ТО или история обслуживания неизвестна.',
     details: 'Сверяем пробег и регламент, согласуем перечень работ и проверяем состояние основных узлов.',
     includes: ['Подбор регламентных операций', 'Замена согласованных расходников', 'Осмотр автомобиля'], factors: 'Интервал ТО, комплектация, список деталей и расходников.' },

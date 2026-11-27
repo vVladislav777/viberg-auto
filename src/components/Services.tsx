@@ -49,7 +49,7 @@ export function Services({ filter, choose, book }: {
     <div className="service-grid">
       {catalog.filter(item => filter === 'all' || item.direction === filter).map(item => {
         const price = pricing.services[item.id]
-        return <article className="service-card" key={item.id}>
+        return <article className="service-card" key={item.id} data-service={item.id}>
           <div className="service-image"><img src={item.image} alt="" loading="lazy"/><span className="service-category">{directions[item.direction].title}</span></div>
           <div className="service-copy">
             <h3>{item.title}</h3><p>{item.description}</p>
