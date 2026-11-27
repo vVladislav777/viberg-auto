@@ -38,6 +38,7 @@ export default function App() {
   const [booking, setBooking] = useState<BookingChoice | null>(null)
   const [filter, setFilter] = useState<ServiceFilter>('all')
   const [showMobileBooking, setShowMobileBooking] = useState(false)
+  const [calculatorVisible, setCalculatorVisible] = useState(false)
   const heroActions = useRef<HTMLDivElement>(null)
   function openBooking(choice: BookingChoice = defaultChoice) {
     if (!openExternalBooking()) setBooking(choice)
@@ -56,7 +57,10 @@ export default function App() {
       setShowMobileBooking(entry.boundingClientRect.bottom < 0)
     })
     if (heroActions.current) bookingObserver.observe(heroActions.current)
-    return () => { observer.disconnect(); bookingObserver.disconnect() }
+    const calculatorObserver = new IntersectionObserver(([entry]) => setCalculatorVisible(entry.isIntersecting))
+    const calculator = document.getElementById('calculator')
+    if (calculator) calculatorObserver.observe(calculator)
+    return () => { observer.disconnect(); bookingObserver.disconnect(); calculatorObserver.disconnect() }
   }, [])
 
   const nav = links.map(([label, href]) => <a href={href} key={href} onClick={() => setMenu(false)}>{label}</a>)
@@ -104,7 +108,7 @@ export default function App() {
       </div>
     </main>
     <Footer/>
-    {showMobileBooking && <div className="mobile-booking"><LiquidButton className="button light" onClick={() => openBooking()}>Записаться на услугу <Arrow/></LiquidButton></div>}
+    {showMobileBooking && !calculatorVisible && <div className="mobile-booking"><LiquidButton className="button light" onClick={() => openBooking()}>Записаться на услугу <Arrow/></LiquidButton></div>}
     {booking && <Booking initial={booking} close={() => setBooking(null)}/>}
   </div>
 }
