@@ -6,7 +6,7 @@ const filters = ['Все фотографии', 'Автомобиль', 'Авт�
 const categories = [1, 1, 2, 2, 3, 3, 3, 3]
 const sizes = [[1672,941], [836,470], [836,470], [836,471], [362,543], [362,543], [362,543], [362,543]]
 
-export function Gallery() {
+export function Gallery({ supplemental = false }: { supplemental?: boolean }) {
   const [filter, setFilter] = useState(0)
   const [photo, setPhoto] = useState<number | null>(null)
   const [zoom, setZoom] = useState(false)
@@ -34,7 +34,7 @@ export function Gallery() {
     return () => window.removeEventListener('keydown', key)
   }, [photo, filter, current])
 
-  return <section className="portfolio section wrap" id="portfolio" data-reveal>
+  return <section className="portfolio section wrap" id={supplemental ? 'gallery' : 'portfolio'} data-reveal>
     <div className="section-heading"><div><p className="eyebrow">ГАЛЕРЕЯ СТУДИИ<span/></p><h2>Характер — в деталях.</h2></div><span className="subtle-note">Демонстрационная галерея</span></div>
     <div className="gallery-toolbar"><div className="filter-controls" role="group" aria-label="Фильтр фотографий">{filters.map((name, i) => <button key={name} aria-pressed={filter === i} onClick={() => setFilter(i)}>{name}</button>)}</div><span className="gallery-count" role="status">{String(visible.length).padStart(2,'0')} фото</span></div>
     <div className={`gallery fitted-gallery ${filter ? 'gallery-filtered' : ''}`} key={filter}>{visible.map(g => <button key={g.image} className={g.index < 4 ? 'landscape' : 'portrait'} onClick={() => { setZoom(false); setPhoto(g.index) }} aria-label={`Открыть фото: ${g.alt}`}><img src={g.image} alt={g.alt} loading="lazy" width={sizes[g.index][0]} height={sizes[g.index][1]}/><span className="gallery-expand" aria-hidden="true">↗</span></button>)}</div>

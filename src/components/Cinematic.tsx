@@ -11,7 +11,8 @@ export function Cinematic() {
       frame = 0
       if (media.matches || innerWidth <= 600) { el.style.setProperty('--progress', '0'); return }
       const rect = el.getBoundingClientRect()
-      const progress = Math.max(0, Math.min(1, -rect.top / (rect.height - innerHeight)))
+      if (rect.bottom < 0 || rect.top > innerHeight) return
+      const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height - innerHeight)))
       el.style.setProperty('--progress', String(progress))
     }
     const update = () => { if (!frame) frame = requestAnimationFrame(draw) }
