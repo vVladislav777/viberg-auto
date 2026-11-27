@@ -61,6 +61,7 @@
 .commercial .service-card[data-service="polishing"] .service-image img { object-position: center 68%; }
 .commercial .service-card[data-service="oil"] .service-image img { object-position: center 64%; }
 .commercial .service-card[data-service="diagnostics"] .service-image img { object-position: center 64%; }
+.commercial .service-card[data-service="suspension"] .service-image img { object-position: center 75%; }
 .commercial .service-category { font-size: 12px; letter-spacing: 0; background: #0a0b0cdd; }
 .commercial .service-copy { width: 100%; min-height: 0; display: flex; flex-direction: column; padding: 14px 22px 20px; }
 .commercial .service-copy h3 { font-size: clamp(18px, 1.65vw, 25px); margin-bottom: 8px; }

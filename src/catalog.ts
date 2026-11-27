@@ -24,6 +24,7 @@ const servicePhotos = {
   oil: root + 'service-oil-change.jpg',
   maintenance: root + 'service-scheduled-maintenance.jpg',
   diagnostics: root + 'service-computer-diagnostics.jpg',
+  suspension: root + 'service-suspension.jpg',
 }
 
 type Service = {
@@ -75,7 +76,7 @@ export const catalog: Service[] = [
     description: 'Плановые работы по регламенту с понятным перечнем замен.', problem: 'Приближается плановое ТО или история обслуживания неизвестна.',
     details: 'Сверяем пробег и регламент, согласуем перечень работ и проверяем состояние основных узлов.',
     includes: ['Подбор регламентных операций', 'Замена согласованных расходников', 'Осмотр автомобиля'], factors: 'Интервал ТО, комплектация, список деталей и расходников.' },
-  { id: 'suspension', direction: 'service', title: 'Обслуживание подвески', image: images.lift,
+  { id: 'suspension', direction: 'service', title: 'Обслуживание подвески', image: servicePhotos.suspension,
     description: 'Определяем причину стука и согласуем ремонт изношенных узлов.', problem: 'Шумы на неровностях, люфт или неравномерный износ шин.',
     details: 'Осматриваем ходовую на подъёмнике, проверяем шарниры, сайлентблоки и амортизаторы, согласуем нужные замены.',
     includes: ['Осмотр ходовой', 'Проверка люфтов', 'Замена согласованных деталей'], factors: 'Найденные дефекты, конструкция подвески и стоимость деталей.' },
