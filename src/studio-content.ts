@@ -8,21 +8,34 @@ export const cases = [
     state: 'Мелкие царапины, следы моек и тусклые отражения на лаке.',
     work: 'Очистка кузова, тестовая полировка и коррекция лакокрасочного покрытия.',
     result: 'Более чёткие отражения и меньше заметных поверхностных дефектов.',
-    duration: '1–2 дня', photos: [comparisonImages.paintBefore, comparisonImages.paintAfter, images.mirror],
+    duration: '1–2 дня', caption: 'Очистка и коррекция лака',
+    photos: [
+      { image: comparisonImages.paintBefore, alt: 'Кузов до полировки' },
+      { image: images.grille, alt: 'Деталь передней решётки' },
+      { image: images.mirror, alt: 'Карбоновое зеркало' },
+    ],
   },
   {
     id: 'interior', model: 'Lexus LFA', title: 'Уход за салоном и оптикой', image: comparisonImages.interiorAfter,
     state: 'Загрязнения на светлой коже и помутнение фар.',
     work: 'Химчистка салона и восстановление внешней поверхности рассеивателей.',
     result: 'Чистая обивка, панели и ковролин. Более прозрачная наружная поверхность фар.',
-    duration: '1 день', photos: [comparisonImages.interiorAfter, comparisonImages.headlightAfter],
+    duration: '1 день', caption: 'Химчистка и восстановление фар',
+    photos: [
+      { image: comparisonImages.interiorBefore, alt: 'Салон до химчистки' },
+      { image: comparisonImages.headlightAfter, alt: 'Фара после восстановления' },
+    ],
   },
   {
     id: 'service', model: 'Lexus LFA', title: 'Плановое обслуживание', image: images.lift,
     state: 'Подошёл срок обслуживания по регламенту.',
     work: 'Осмотр на подъёмнике, проверка рабочих жидкостей, замена масла и фильтров.',
     result: 'Согласованные регламентные работы выполнены. Определён список следующих проверок.',
-    duration: '2–4 часа', photos: [images.engine, images.lift, images.wheel],
+    duration: '2–4 часа', caption: 'Осмотр, замена масла и фильтров',
+    photos: [
+      { image: images.engine, alt: 'Моторный отсек' },
+      { image: images.wheel, alt: 'Деталь колеса и тормозной системы' },
+    ],
   },
 ]
 

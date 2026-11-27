@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { images } from '@/config'
 import { benefits, cases, faq, reviews } from '@/studio-content'
 import { Arrow, Label } from './SectionUI'
+import { CasePhotos } from './Gallery'
 import { Modal } from './ui/modal'
 
 export function About() {
@@ -33,16 +34,21 @@ export function Process() {
 export function PortfolioCases() {
   const [active, setActive] = useState<(typeof cases)[number] | null>(null)
   return <section className="case-section section wrap" id="portfolio" data-reveal aria-labelledby="portfolio-title">
-    <div className="section-heading"><div><Label>ПОРТФОЛИО</Label><h2 id="portfolio-title">Примеры работ</h2></div><p className="section-note">Демонстрационные кейсы на Lexus LFA.</p></div>
+    <div className="section-heading"><div><Label>ПОРТФОЛИО</Label><h2 id="portfolio-title">Характер — в деталях</h2></div><p className="section-note">Демонстрационные кейсы на Lexus LFA.</p></div>
     <div className="case-grid">
       {cases.map(item => <button key={item.id} type="button" className="case-card" onClick={() => setActive(item)}>
-        <img src={item.image} alt="" loading="lazy"/><span className="case-label"><small>{item.model} · {item.duration}</small><strong>{item.title}</strong><Arrow/></span>
+        <img src={item.image} alt="" loading="lazy"/>
+        <span className="case-label">
+          <small>{item.model} · {item.duration}</small>
+          <strong>{item.title}</strong><Arrow/>
+          <span className="case-work">{item.caption}</span>
+        </span>
       </button>)}
     </div>
     {active && <Modal onClose={() => setActive(null)} label={active.title} className="case-dialog">
       <Label>ДЕМОНСТРАЦИОННЫЙ КЕЙС</Label><h2>{active.title}</h2><p className="modal-intro">{active.model} · {active.duration}</p>
       <dl className="detail-list"><div><dt>Исходное состояние</dt><dd>{active.state}</dd></div><div><dt>Что сделали</dt><dd>{active.work}</dd></div><div><dt>Результат</dt><dd>{active.result}</dd></div></dl>
-      <div className="case-photos">{active.photos.map((src, index) => <img key={src} src={src} alt={`${active.model}, фото ${index + 1}`} loading="lazy"/>)}</div>
+      <CasePhotos photos={active.photos} key={active.id}/>
     </Modal>}
   </section>
 }

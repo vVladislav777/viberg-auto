@@ -21,10 +21,11 @@ export const comparisonImages = {
 
 const servicePhotos = {
   polishing: comparisonImages.paintAfter,
-  oil: root + 'service-oil-change.jpg',
-  maintenance: root + 'service-scheduled-maintenance.jpg',
-  diagnostics: root + 'service-computer-diagnostics.jpg',
-  suspension: root + 'service-suspension.jpg',
+  oil: root + 'service-oil-drain.jpg',
+  engine: root + 'service-engine-work.jpg',
+  maintenance: root + 'service-maintenance-inspection.jpg',
+  diagnostics: root + 'service-diagnostics-work.jpg',
+  suspension: root + 'service-suspension-work.jpg',
 }
 
 type Service = {
@@ -54,7 +55,7 @@ export const catalog: Service[] = [
     const [problem, factors] = details[id]
     return {
       ...item, id, direction: id === 'oil' || id === 'engine' ? 'service' as const : 'detailing' as const,
-      image: id === 'polishing' || id === 'oil' ? servicePhotos[id] : item.image,
+      image: id === 'polishing' || id === 'oil' || id === 'engine' ? servicePhotos[id] : item.image,
       title: id === 'oil' ? 'Замена масла и фильтров' : item.title,
       description: id === 'oil' ? 'Свежее масло по допуску производителя и новые фильтры по регламенту.' : item.description,
       problem, factors,

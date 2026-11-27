@@ -2,7 +2,7 @@
 import { useState, type FormEvent } from 'react'
 import { catalog, directionIds, directions, extraIds, serviceById, type Direction } from '@/catalog'
 import { studio } from '@/config'
-import { money, pricing, quote, vehicleClasses, type ServiceId, type VehicleClass } from '@/pricing'
+import { money, pricing, quote, serviceAmount, vehicleClasses, type ServiceId, type VehicleClass } from '@/pricing'
 import { Arrow, Label } from './SectionUI'
 import { LiquidButton } from './ui/liquid-glass-button'
 import { Modal } from './ui/modal'
@@ -22,22 +22,59 @@ function Classes({ value, change }: { value: VehicleClass; change: (id: VehicleC
   </select></label>
 }
 
+const vehicleProfiles: Record<VehicleClass, string> = {
+  compact: 'M7 29v-6l6-2 7-8h21l8 9 7 2v5h-8m-31 0H7m37 0H23',
+  midsize: 'M5 29v-5l9-3 11-9h19l9 8 9 2v7h-9m-34 0H5m40 0H24',
+  crossover: 'M5 29v-9l9-1 7-10h25l10 10 6 3v7h-9m-34 0H5m40 0H24',
+  large: 'M4 29V12l9-2 9-4h29l6 11 5 3v9h-9m-34 0H4m41 0H24',
+}
+const classLabels: Record<VehicleClass, string> = {
+  compact: 'Компактный', midsize: 'Седан / купе', crossover: 'Кроссовер', large: 'SUV / минивэн',
+}
+
+function ClassPicker({ value, change }: { value: VehicleClass; change: (id: VehicleClass) => void }) {
+  return <fieldset className="vehicle-classes">
+    <legend>Класс автомобиля</legend>
+    <div className="vehicle-options">
+      {vehicleClasses.map(id => <label key={id}>
+        <input type="radio" name="class" value={id} checked={value === id} onChange={() => change(id)} aria-label={pricing.vehicleClasses[id].label}/>
+        <span className="vehicle-option">
+          <svg viewBox="0 0 68 40" width="68" height="40" fill="none" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d={vehicleProfiles[id]}/>
+            <circle cx={id === 'compact' ? 20 : 21.5} cy="29" r="4"/><circle cx={id === 'compact' ? 46 : 49} cy="29" r="4"/>
+          </svg>
+          <span>{classLabels[id]}</span>
+        </span>
+      </label>)}
+    </div>
+  </fieldset>
+}
+
 export function Calculator({ book }: { book: (choice: BookingChoice) => void }) {
   const [choice, setChoice] = useState<BookingChoice>(defaultChoice)
   const total = quote(choice.serviceId, choice.vehicleClass, choice.extras)
+  const main = serviceAmount(choice.serviceId, choice.vehicleClass)
+  const additional = choice.extras.reduce((sum, id) => sum + serviceAmount(id, choice.vehicleClass), 0)
+  const rounding = total - main - additional
   return <section className="calculator section" id="calculator" aria-labelledby="calculator-title" data-reveal>
     <div className="wrap calculator-layout">
       <div className="calculator-intro">
         <Label>ПРЕДВАРИТЕЛЬНЫЙ РАСЧЁТ</Label><h2 id="calculator-title">Сколько стоит работа?</h2>
         <p>Выберите автомобиль и услуги. Состав работ и итоговую стоимость согласуем после осмотра.</p>
-        <aside className="estimate-total" aria-live="polite">
-          <span>Ориентир по стоимости</span><strong>от {money(total)}</strong>
+        <aside className="estimate-total">
+          <span>Предварительная стоимость</span>
+          <output aria-live="polite" aria-atomic="true"><strong key={total}>от {money(total)}</strong></output>
           {pricing.demonstration && <small>Расчёт по демонстрационному прайсу</small>}
+          <dl className="estimate-breakdown">
+            <div><dt>Основная услуга<span>{serviceById(choice.serviceId).title}</span></dt><dd>{money(main)}</dd></div>
+            <div><dt>Дополнительные услуги{choice.extras.length > 0 && <span>{choice.extras.map(id => serviceById(id).title).join(', ')}</span>}</dt><dd>{additional ? money(additional) : '—'}</dd></div>
+            {rounding !== 0 && <div className="estimate-rounding"><dt>Округление итога</dt><dd>{money(rounding)}</dd></div>}
+          </dl>
         </aside>
       </div>
       <form className="calculator-form" onSubmit={event => { event.preventDefault(); book({ ...choice, vehicle: choice.vehicle.trim() }) }}>
         <label>Марка и модель<input name="vehicle" value={choice.vehicle} onChange={event => setChoice({ ...choice, vehicle: event.target.value })} placeholder="Например, Lexus RX" required pattern=".*\S.*" maxLength={100}/></label>
-        <Classes value={choice.vehicleClass} change={vehicleClass => setChoice({ ...choice, vehicleClass })}/>
+        <ClassPicker value={choice.vehicleClass} change={vehicleClass => setChoice({ ...choice, vehicleClass })}/>
         <label>Основная услуга<select name="service" value={choice.serviceId} onChange={event => {
           const serviceId = event.target.value as ServiceId
           setChoice({ ...choice, serviceId, extras: choice.extras.filter(id => id !== serviceId) })
@@ -48,7 +85,7 @@ export function Calculator({ book }: { book: (choice: BookingChoice) => void }) 
           {extraIds.filter(id => id !== choice.serviceId).map(id => <label key={id}>
             <input type="checkbox" checked={choice.extras.includes(id)} onChange={event => setChoice({
               ...choice, extras: event.target.checked ? [...choice.extras, id] : choice.extras.filter(item => item !== id),
-            })}/><span>{serviceById(id).title}</span><small>от {money(quote(id, choice.vehicleClass))}</small>
+            })}/><span>{serviceById(id).title}</span><small>от {money(serviceAmount(id, choice.vehicleClass))}</small>
           </label>)}
         </fieldset>
         <LiquidButton type="submit" className="button light">Перейти к записи <Arrow/></LiquidButton>

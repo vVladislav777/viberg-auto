@@ -26,6 +26,10 @@ export type ServiceId = keyof typeof pricing.services
 export type VehicleClass = keyof typeof pricing.vehicleClasses
 export const vehicleClasses = Object.keys(pricing.vehicleClasses) as VehicleClass[]
 
+export function serviceAmount(serviceId: ServiceId, vehicleClass: VehicleClass) {
+  return Math.round(pricing.services[serviceId].from * pricing.vehicleClasses[vehicleClass].factor)
+}
+
 export function quote(serviceId: ServiceId, vehicleClass: VehicleClass, extras: readonly ServiceId[] = []) {
   const unique = new Set([serviceId, ...extras])
   const subtotal = [...unique].reduce((sum, id) => sum + pricing.services[id].from, 0)

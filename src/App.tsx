@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import { BlurReveal } from '@/components/ui/blur-reveal'
 import { LiquidButton } from '@/components/ui/liquid-glass-button'
 import { Cinematic } from '@/components/Cinematic'
-import { Gallery } from '@/components/Gallery'
 import { Arrow } from '@/components/SectionUI'
 import { Directions, Services, type ServiceFilter } from '@/components/Services'
 import { Comparison } from '@/components/Comparison'
@@ -74,8 +73,8 @@ export default function App() {
             </header>
             {menu && <nav className="mobile-menu" id="mobile-menu" aria-label="Мобильная навигация">{nav}</nav>}
             <div className="hero-copy">
-              <h1 id="hero-title"><BlurReveal className="offer-line">Детейлинг и автосервис.</BlurReveal>{' '}<BlurReveal className="offer-line" delay={.12}>Без компромиссов.</BlurReveal></h1>
-              <p className="hero-description">Восстанавливаем внешний вид, защищаем кузов и заботимся о техническом состоянии вашего автомобиля. От профессиональной полировки до комплексного обслуживания.</p>
+              <h1 id="hero-title"><BlurReveal className="offer-line">Детейлинг и автосервис</BlurReveal></h1>
+              <p className="hero-description">Восстанавливаем блеск. Защищаем кузов. Обслуживаем автомобиль</p>
               <div className="hero-actions" ref={heroActions}>
                 <LiquidButton className="button black" onClick={() => openBooking()}>Записаться на услугу <Arrow/></LiquidButton>
                 <LiquidButton asChild variant="outline" className="hero-estimate"><a href="#calculator">Узнать стоимость</a></LiquidButton>
@@ -94,7 +93,6 @@ export default function App() {
         <About/>
         <Process/>
         <PortfolioCases/>
-        <Gallery supplemental/>
         <Reviews/>
         <FAQ/>
         <section className="booking-section wrap" id="booking" data-reveal>
